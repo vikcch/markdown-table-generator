@@ -1,18 +1,19 @@
 <template>
 
 	<div>
-		<!-- <p>{{ this.$parent.$data['rows'] }}</p> -->
-        <p>{{intel.name}}s:</p>
+
+		<p>{{intel.name}}s:</p>
 
 		<button
-			class="button button-red"
+			:class="['button', styleStateRed]"
 			@click="remove()"
+			:disabled="isDisabled"
 		>Remove {{ intel.name }}</button>
-		
-        <span class="intel-value"> {{ intel.value }}</span>
-		
-        <button
-			class="button button-green"
+
+		<span class="intel-value"> {{ intel.value }}</span>
+
+		<button
+			class="button button--green"
 			@click="add()"
 		>Add {{ intel.name }}</button>
 
@@ -31,28 +32,55 @@ export default {
 
 		remove() {
 
-			if (this.intel.value > 1) {
+			const work = {
 
-				--this.$parent.$data[this.intel.key];
-			}
+				row: () => this.$parent.table.pop(),
+
+				column: () => this.$parent.table.forEach(e => e.pop()),
+			};
+
+			work[this.intel.key].call();
 		},
+
 
 		add() {
 
-			this.$parent.$data[this.intel.key]++;
-		}
+			const columnsCount = this.$parent.columnsCount;
+
+			const work = {
+
+				row: () => this.$parent.table.push(Array(columnsCount)),
+
+				column: () => this.$parent.table.forEach(e => e.push(Math.random(10))),
+			};
+
+			work[this.intel.key].call();
+		},
+
+	},
+	computed: {
+
+		isDisabled() {
+
+			return this.intel.value < 2;
+		},
+
+		styleStateRed() {
+
+			return `button--${this.isDisabled ? 'disabled' : 'red'}`;
+		},
 	}
 
 }
 </script>
 
 <style scoped>
-.button-red {
+.button--red {
 	color: white;
 	background-color: rgb(221, 51, 51);
 }
 
-.button-green {
+.button--green {
 	color: white;
 	background-color: #218838;
 }
@@ -69,17 +97,16 @@ export default {
 	filter: brightness(90%);
 }
 
-.button:hover {
+.button:enabled:hover {
 	background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
 	/* filter: brightness(95%); */
 }
 
-.intel-value{
+.intel-value {
+	font-size: 18px;
+	font-weight: bold;
 
-    font-size: 18px;
-    font-weight: bold;
-
-    margin: 0 8px;
+	margin: 0 8px;
 }
 </style>
 

@@ -12,13 +12,3 @@ import './assets/global.css';
 new Vue({
   render: h => h(App),
 }).$mount('#app');
-
-
-
-const f = a => (a.b = 3, a);
-
-console.log(f({ b: 2 }));
-
-let c;
-const x = c = 6;
-console.log(x);
