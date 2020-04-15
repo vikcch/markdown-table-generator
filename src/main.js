@@ -12,3 +12,8 @@ import './assets/global.css';
 new Vue({
   render: h => h(App),
 }).$mount('#app');
+
+// STOPSHIP:: não usar varios index.vue... o debugger falha no browser
+
+// TODO:: Navegação pela tabala com as arrows
+

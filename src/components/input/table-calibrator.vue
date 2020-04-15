@@ -4,18 +4,22 @@
 
 		<p>{{intel.name}}s:</p>
 
-		<button
-			:class="['button', styleStateRed]"
-			@click="remove()"
-			:disabled="isDisabled"
-		>Remove {{ intel.name }}</button>
+		<div class="train">
 
-		<span class="intel-value"> {{ intel.value }}</span>
+			<button
+				:class="['button', styleStateRed]"
+				@click="remove()"
+				:disabled="isDisabled"
+			>Remove {{ intel.name }}</button>
 
-		<button
-			class="button button--green"
-			@click="add()"
-		>Add {{ intel.name }}</button>
+			<p class="intel-value"> {{ intel.value }}</p>
+
+			<button
+				class="button button--green"
+				@click="add()"
+			>Add {{ intel.name }}</button>
+
+		</div>
 
 	</div>
 
@@ -36,7 +40,11 @@ export default {
 
 				row: () => this.$parent.table.pop(),
 
-				column: () => this.$parent.table.forEach(e => e.pop()),
+				column: () => {
+
+					this.$parent.tableHeader.pop();
+					this.$parent.table.forEach(e => e.pop());
+				}
 			};
 
 			work[this.intel.key].call();
@@ -49,9 +57,17 @@ export default {
 
 			const work = {
 
-				row: () => this.$parent.table.push(Array(columnsCount)),
+				row: () => {
 
-				column: () => this.$parent.table.forEach(e => e.push(Math.random(10))),
+					const arr = Array(columnsCount).fill('');
+					this.$parent.table.push(arr);
+				},
+
+				column: () => {
+
+					this.$parent.tableHeader.push('');
+					this.$parent.table.forEach(e => e.push(''));
+				},
 			};
 
 			work[this.intel.key].call();
@@ -106,7 +122,8 @@ export default {
 	font-size: 18px;
 	font-weight: bold;
 
-	margin: 0 8px;
+	width: 50px;
+	text-align: center;
 }
 </style>
 

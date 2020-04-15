@@ -4,20 +4,25 @@
 		class="page-container"
 	>
 		<app-header msg="MARKDOWN ASCII TABLE GENERATOR" />
-		<!-- <app-input /> -->
-		<app-input />
+
+		<app-input ref="input" />
+
+		<app-output ref="output" />
+
 	</div>
 </template>
 
 <script>
-import headerVue from './components/header.vue'
-import inputVue from './components/input.vue'
+import headerVue from './components/header.vue';
+import inputVue from './components/input';
+import outputVue from './components/output';
 
 export default {
 	name: 'App',
 	components: {
 		'app-header': headerVue,
-		'app-input': inputVue		
+		'app-input': inputVue,
+		'app-output': outputVue
 	}
 }
 </script>

@@ -5,7 +5,7 @@
 		<app-column
 			v-for="(col,index) in intel"
 			:key="index"
-			:intel="{value:col, index:index}"
+			:intel="{value:col, index:index, key:'body'}"
 		/>
 
 	</tr>

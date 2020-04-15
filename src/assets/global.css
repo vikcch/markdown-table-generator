@@ -1,8 +1,33 @@
 @import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
-
 * {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
     /* user-select: none; */
+}
+
+.train {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.ladder {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.train-drift {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.rm-xl {
+    margin-right: 32px;
+}
+
+.lm-m {
+    margin-left: 8px;
 }
