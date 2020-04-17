@@ -19,6 +19,7 @@ import { head } from '../../units/absx';
 export default {
 
 	props: {
+
 		intel: Object
 	},
 
@@ -39,7 +40,7 @@ export default {
 
 			work[this.intel.key].call();
 
-			head(this.$root.$children).$refs['output'].$forceUpdate();		
+			head(this.$root.$children).$refs['output'].$forceUpdate();
 		}
 	},
 

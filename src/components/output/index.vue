@@ -4,10 +4,15 @@
 
 		<p>Output:</p>
 
-		<pre class="code"><div><app-line
-            v-for="(row,index) in getMakedRows()"
+		<span>Copied!</span>
+
+		<button @click="copyToClipboard_OnClick()">Copy to Clipboard</button>
+
+		<pre class="code"><div ref="result"><app-line
+            v-for="(row,index) in makedRows"
             :key="index"
-            :intel="{value:row, index:index}" /></div>
+            :intel="{value:row, index:index}"
+			:options="options" /></div>
 
         </pre>
 
@@ -21,6 +26,24 @@ import { head } from '../../units/absx';
 
 export default {
 
+	data() {
+
+		return {
+
+			// options de table-options.vue
+			options: {
+
+				highlightHeader: true,
+				sameWidth: false,
+				minimumWidth: 6,
+				tableStyle: {
+					style: 'mysql',
+					border: 'double'
+				}
+			}
+		}
+	},
+
 	components: {
 
 		'app-line': lineVue
@@ -28,30 +51,55 @@ export default {
 
 	methods: {
 
+		// TODO:: meter em js-tips
 		// Em 'computed' não "forçava o update" em alterações nas _checkboxs_
 		// Funcionava com hack: `this.table.push([]); this.table.pop();`
+		// (TINHA O METODO MAKEROWS AQUI)
 
-		getMakedRows() {
+		// Agora funciona em computed porque no 'input' > 'table options' estou a 
+		// altera a data() 'options' de 'output' que posteriormente envio para
+		// 'line.vue' pelas props (`:options="options"`, não está junto com intel)
 
-			const inputVue = head(this.$root.$children).$refs['input'];
+		copyToClipboard_OnClick() {
 
-			const topBoundary = Array(inputVue.columnsCount).fill('-');
+			const text = this.$refs['result'].innerText;
 
-			const result = [topBoundary, inputVue.tableHeader];
+			navigator.clipboard.writeText(text).then(function () {
 
-			if (inputVue.$refs['highlight-header'].checked) {
+				console.log('copiado', text);
 
-				result.push(topBoundary);
-			}
+			}, function (err) {
 
-			result.push(...inputVue.table, topBoundary);
 
-			return result;
+				/* eslint-disable-next-line */
+				console.error(err);
+			});
+
 		}
 
 	},
 
-	computed: {},
+	computed: {
+
+		// specialRow => Para ser 'top', 'bottom' ou 'entre header e body'
+		makedRows() {
+
+			const inputVue = head(this.$root.$children).$refs['input'];
+
+			const specialRow = Array(inputVue.columnsCount).fill('');
+
+			const result = [specialRow, inputVue.tableHeader];
+
+			if (this.options.highlightHeader) {
+
+				result.push(specialRow);
+			}
+
+			result.push(...inputVue.table, specialRow);
+
+			return result;
+		}
+	},
 
 }
 </script>

@@ -7,5 +7,6 @@ export const padEdges = (edges, count) => string => {
     return `${edges.repeat(count)}${string}${edges.repeat(count)}`;
 };
 
+export const removeCharAt = index => string => string.slice(0, index) + string.slice(0, index + 1);
 
-export default { makePrefixer, makeSufixer };
+export default { makePrefixer, makeSufixer, removeCharAt };

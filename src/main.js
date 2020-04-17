@@ -17,3 +17,11 @@ new Vue({
 
 // TODO:: Navegação pela tabala com as arrows
 
+// TODO:: copy to clipboard
+
+// TODO:: Spreadsheet (numeros antes da primeira coluna)
+
+// TODO:: remover absx e fxnl desnecessarios
+
+// TODO:: alinhamento do header e do body
+

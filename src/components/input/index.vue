@@ -1,12 +1,12 @@
 <template>
 
-	<div>
+	<div @keyup="onKeyUp">
 
 		<app-table-calibrator :intel="{name: 'Row', key:'row', value: rowsCount}" />
 
 		<app-table-calibrator :intel="{name: 'Column', key:'column', value: columnsCount}" />
 
-		<table>
+		<table ref="table">
 
 			<thead>
 
@@ -32,125 +32,7 @@
 
 		<button @click="showData()">Show Data</button>
 
-		<div class="ladder">
-
-			<label>
-
-				<input
-					type="checkbox"
-					ref="highlight-header"
-					@change="highlightHeader_OnChange()"
-					checked
-				>
-				<span>Highlight header</span>
-
-			</label>
-
-			<label>
-
-				<input
-					type="checkbox"
-					ref="same-width"
-					@change="sameWidth_OnChange()"
-				>
-				<span>Same width columns</span>
-
-			</label>
-
-			<label>
-
-				<span>Columns minimum width</span>
-				<input
-					type="number"
-					ref="min-width"
-					min="2"
-					value="6"
-					@input="onInput()"
-				>
-
-			</label>
-
-			<form>
-				<p>Table style:</p>
-
-				<div class="train-drift">
-
-					<label class="rm-xl">
-
-						<input
-							type="radio"
-							value="mysql"
-							name="style"
-							checked
-						>
-						<span>MySQL</span>
-
-						<div>
-							<pre class="ladder">
-						<code class="demo">+--------+--------+</code>
-						<code class="demo">| Header | Header |</code>
-						<code class="demo">+--------+--------+</code>
-						<code class="demo">|   data |   data |</code>
-						<code class="demo">|   data |   data |</code>
-						<code class="demo">+--------+--------+</code>
-						</pre>
-						</div>
-
-					</label>
-
-					<label>
-
-						<input
-							type="radio"
-							value="ascii"
-							name="style"
-						>
-						<span>Ascii</span>
-
-						<div class="train">
-
-							<div>
-								<pre class="ladder">
-								<code class="demo">╔════════╤════════╗</code>
-								<code class="demo">║ Header │ Header ║</code>
-								<code class="demo">╟────────┼────────╢</code>
-								<code class="demo">║   data │   data ║</code>
-								<code class="demo">║   data │   data ║</code>
-								<code class="demo">╚════════╧════════╝</code>
-								</pre>
-							</div>
-
-							<div class="ladder lm-m">
-
-								<label>
-									<input
-										type="radio"
-										value="ascii-double-border"
-										name="ascii-border-style"
-										checked
-									>
-									<span>Double border</span>
-								</label>
-
-								<label>
-									<input
-										type="radio"
-										value="ascii-single-border"
-										name="ascii-border-style"
-									>
-									<span>Single border</span>
-								</label>
-
-							</div>
-
-						</div>
-
-					</label>
-
-				</div>
-			</form>
-
-		</div>
+		<app-table-options ref="options" />
 
 	</div>
 
@@ -162,6 +44,7 @@ import columnVue from './column.vue';
 import rowVue from './row.vue';
 import tableCalibratorVue from './table-calibrator.vue';
 import { head } from './../../units/absx.js';
+import tableOptionsVue from './table-options.vue';
 
 export default {
 
@@ -169,7 +52,8 @@ export default {
 
 		'app-table-calibrator': tableCalibratorVue,
 		'app-column': columnVue,
-		'app-row': rowVue
+		'app-row': rowVue,
+		'app-table-options': tableOptionsVue
 	},
 
 	data() {
@@ -208,7 +92,6 @@ export default {
 
 		maxCharsAllColumns() {
 
-
 			const maxHeader = Math.max(...this.tableHeader.map(x => x.length));
 
 			const maxBody = this.table.reduce((acc, cur) => {
@@ -220,20 +103,95 @@ export default {
 			return Math.max(maxHeader, maxBody);
 		},
 
-		// TODO:: discriminar
-		onInput() {
+		onKeyUp(event) {
 
-			head(this.$root.$children).$refs['output'].$forceUpdate();
-		},
+			const { key } = event;
 
-		highlightHeader_OnChange() {
+			const tdFocused = document.activeElement.parentNode
 
-			head(this.$root.$children).$refs['output'].$forceUpdate();
-		},
+			const tds = this.$refs['table'].querySelectorAll('td');
 
-		sameWidth_OnChange() {
+			const tdFocusedIndex = Array.from(tds).indexOf(tdFocused);
 
-			head(this.$root.$children).$refs['output'].$forceUpdate();
+			const coords = {
+
+				x: tdFocusedIndex % this.columnsCount,
+				y: Math.floor(tdFocusedIndex / this.columnsCount)
+			};
+
+			// coords (x,y) => zero based
+			const getIndex = ({ x, y }) => y * this.columnsCount + x;
+
+			console.log(coords);
+
+			const work = {
+
+				ArrowUp: () => {
+
+					const index = coords.y === 0
+						? getIndex({ x: coords.x, y: this.rowsCount })
+						: getIndex({ x: coords.x, y: coords.y - 1 });
+
+					tds[index].firstChild.focus();
+				},
+
+				ArrowLeft: () => {
+					/* 
+										if (coords.x === 0) {
+					
+											const index = (coords.y + 1) * this.columnsCount;
+					
+											tds[index - 1].firstChild.focus();
+					
+										} else {
+					
+											tds[tdFocusedIndex - 1].firstChild.focus();
+										} */
+
+					const index = coords.x === 0
+						? getIndex({ x: this.columnsCount - 1, y: coords.y })
+						: getIndex({ x: coords.x - 1, y: coords.y });
+
+					tds[index].firstChild.focus();
+
+				},
+
+				ArrowRight: () => {
+
+					/* 					if (coords.x === this.columnsCount - 1) {
+					
+											const index = coords.y * this.columnsCount;
+											tds[index].firstChild.focus();
+					
+										} else {
+					
+											tds[tdFocusedIndex + 1].firstChild.focus();
+										} */
+
+
+					const index = coords.x === this.columnsCount - 1
+						? getIndex({ x: 0, y: coords.y })
+						: getIndex({ x: coords.x + 1, y: coords.y });
+
+					tds[index].firstChild.focus();
+
+
+				},
+				ArrowDown: () => {
+
+					const index = coords.y === this.rowsCount
+						? getIndex({ x: coords.x, y: 0 })
+						: getIndex({ x: coords.x, y: coords.y + 1 });
+
+					tds[index].firstChild.focus();
+				},
+			};
+
+			key in work && work[key].call();
+
+
+			// TODO:: fazer circular
+
 		}
 
 	},
@@ -248,15 +206,11 @@ export default {
 		rowsCount() {
 
 			return this.table.length;
-		},		
+		},
 	},
 
 }
 </script>
 
 <style scoped>
-code.demo {
-	font-family: "Courier New", Courier, monospace;
-	font-size: 8pt;
-}
 </style>
