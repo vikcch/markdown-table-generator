@@ -1,12 +1,15 @@
 <template>
 
-	<div @keyup="onKeyUp">
+	<div>
 
 		<app-table-calibrator :intel="{name: 'Row', key:'row', value: rowsCount}" />
 
 		<app-table-calibrator :intel="{name: 'Column', key:'column', value: columnsCount}" />
 
-		<table ref="table">
+		<table
+			ref="table"
+			@keyup="onKeyUp"
+		>
 
 			<thead>
 
@@ -21,6 +24,7 @@
 			<tbody>
 
 				<app-row
+					ref="rrr"
 					v-for="(row, index) in table"
 					:key="index"
 					:intel="row"
@@ -29,6 +33,8 @@
 			</tbody>
 
 		</table>
+
+		<p>control + arrow to navigate</p>
 
 		<button @click="showData()">Show Data</button>
 
@@ -72,7 +78,9 @@ export default {
 
 			console.log(this.table);
 
-			console.log('mw', this.minWidth);
+			// const outputVue = head(this.$root.$children).$refs['output'];
+
+			// console.log(outputVue.options.bodyColumnsAlignment);
 		},
 
 		maxCharsColumn(index) {
@@ -105,6 +113,13 @@ export default {
 
 		onKeyUp(event) {
 
+			const arrowsCode = [37, 38, 39, 40];
+
+			if (!event.ctrlKey || !arrowsCode.includes(event.keyCode)) {
+
+				return;
+			}
+
 			const { key } = event;
 
 			const tdFocused = document.activeElement.parentNode
@@ -122,76 +137,26 @@ export default {
 			// coords (x,y) => zero based
 			const getIndex = ({ x, y }) => y * this.columnsCount + x;
 
-			console.log(coords);
-
 			const work = {
 
-				ArrowUp: () => {
+				'ArrowUp': coords.y === 0
+					? getIndex({ x: coords.x, y: this.rowsCount })
+					: getIndex({ x: coords.x, y: coords.y - 1 }),
 
-					const index = coords.y === 0
-						? getIndex({ x: coords.x, y: this.rowsCount })
-						: getIndex({ x: coords.x, y: coords.y - 1 });
+				'ArrowLeft': coords.x === 0
+					? getIndex({ x: this.columnsCount - 1, y: coords.y })
+					: getIndex({ x: coords.x - 1, y: coords.y }),
 
-					tds[index].firstChild.focus();
-				},
+				'ArrowRight': coords.x === this.columnsCount - 1
+					? getIndex({ x: 0, y: coords.y })
+					: getIndex({ x: coords.x + 1, y: coords.y }),
 
-				ArrowLeft: () => {
-					/* 
-										if (coords.x === 0) {
-					
-											const index = (coords.y + 1) * this.columnsCount;
-					
-											tds[index - 1].firstChild.focus();
-					
-										} else {
-					
-											tds[tdFocusedIndex - 1].firstChild.focus();
-										} */
-
-					const index = coords.x === 0
-						? getIndex({ x: this.columnsCount - 1, y: coords.y })
-						: getIndex({ x: coords.x - 1, y: coords.y });
-
-					tds[index].firstChild.focus();
-
-				},
-
-				ArrowRight: () => {
-
-					/* 					if (coords.x === this.columnsCount - 1) {
-					
-											const index = coords.y * this.columnsCount;
-											tds[index].firstChild.focus();
-					
-										} else {
-					
-											tds[tdFocusedIndex + 1].firstChild.focus();
-										} */
-
-
-					const index = coords.x === this.columnsCount - 1
-						? getIndex({ x: 0, y: coords.y })
-						: getIndex({ x: coords.x + 1, y: coords.y });
-
-					tds[index].firstChild.focus();
-
-
-				},
-				ArrowDown: () => {
-
-					const index = coords.y === this.rowsCount
-						? getIndex({ x: coords.x, y: 0 })
-						: getIndex({ x: coords.x, y: coords.y + 1 });
-
-					tds[index].firstChild.focus();
-				},
+				'ArrowDown': coords.y === this.rowsCount
+					? getIndex({ x: coords.x, y: 0 })
+					: getIndex({ x: coords.x, y: coords.y + 1 }),
 			};
 
-			key in work && work[key].call();
-
-
-			// TODO:: fazer circular
-
+			key in work && tds[work[key]].firstChild.focus();
 		}
 
 	},

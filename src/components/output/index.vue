@@ -11,9 +11,8 @@
 		<pre class="code"><div ref="result"><app-line
             v-for="(row,index) in makedRows"
             :key="index"
-            :intel="{value:row, index:index}"
-			:options="options" /></div>
-
+            :intel="{value:row, index:index}" /></div>
+			
         </pre>
 
 	</div>
@@ -25,24 +24,6 @@ import lineVue from './line.vue';
 import { head } from '../../units/absx';
 
 export default {
-
-	data() {
-
-		return {
-
-			// options de table-options.vue
-			options: {
-
-				highlightHeader: true,
-				sameWidth: false,
-				minimumWidth: 6,
-				tableStyle: {
-					style: 'mysql',
-					border: 'double'
-				}
-			}
-		}
-	},
 
 	components: {
 
@@ -81,6 +62,16 @@ export default {
 
 	computed: {
 
+		highlightHeader() {
+
+			const inputVue = head(this.$root.$children).$refs['input'];
+
+			const { highlightHeader } = inputVue.$refs['options'];
+
+			return highlightHeader;
+		},
+
+
 		// specialRow => Para ser 'top', 'bottom' ou 'entre header e body'
 		makedRows() {
 
@@ -90,7 +81,7 @@ export default {
 
 			const result = [specialRow, inputVue.tableHeader];
 
-			if (this.options.highlightHeader) {
+			if (this.highlightHeader) {
 
 				result.push(specialRow);
 			}

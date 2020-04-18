@@ -9,4 +9,6 @@ export const padEdges = (edges, count) => string => {
 
 export const removeCharAt = index => string => string.slice(0, index) + string.slice(0, index + 1);
 
-export default { makePrefixer, makeSufixer, removeCharAt };
+export const validator = (...tests) => obj => tests.every(fn => fn(obj));
+
+export default { makePrefixer, makeSufixer, removeCharAt, validator };

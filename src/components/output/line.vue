@@ -12,7 +12,6 @@ export default {
 	props: {
 
 		intel: Object,
-		options: Object
 	},
 
 	methods: {
@@ -54,6 +53,27 @@ export default {
 
 	computed: {
 
+		options() {
+
+			const inputVue = head(this.$root.$children).$refs['input'];
+
+			const options = inputVue.$refs['options'];
+
+			const { highlightHeader, sameWidth, minimumWidth } = options;
+
+			const { style, border } = options.tableStyle;
+
+			return {
+				highlightHeader,
+				sameWidth,
+				minimumWidth,
+				tableStyle: {
+					style, border
+				}
+			};
+
+		},
+
 		specialRowFiller() {
 
 			const tableStyle = {
@@ -75,13 +95,10 @@ export default {
 
 			const { style, border } = this.options.tableStyle;
 
-			const selected = tableStyle[style][border] || tableStyle.mysql.def;
+			const selected = tableStyle[style][border] || tableStyle[style].def;
 
 			const work = {
 
-				// '0': { leftEdge: '╔', pad: '═', columnSeparator: '╤', rightEdge: '╗' },
-				// '2': { leftEdge: '╟', pad: '─', columnSeparator: '┼', rightEdge: '╢' },
-				// def: { leftEdge: '╚', pad: '═', columnSeparator: '╧', rightEdge: '╝' }
 				'0': {
 					leftEdge: selected.top[0], pad: selected.top[1],
 					columnSeparator: selected.top[2], rightEdge: selected.top[3]
@@ -115,33 +132,30 @@ export default {
 
 			const { style, border } = this.options.tableStyle;
 
-			const selected = tableStyle[style][border] || tableStyle.mysql.def;
+			const selected = tableStyle[style][border] || tableStyle[style].def;
 
 			return {
+
 				leftEdge: selected[0], pad: selected[1],
 				columnSeparator: selected[2], rightEdge: selected[3]
 			};
-
-
-			// return { leftEdge: '║', pad: ' ', columnSeparator: '│', rightEdge: '║' };
 		},
 
 		row() {
-			
+
 			const inputVue = head(this.$root.$children).$refs['input'];
-			
+
 			const highlight = this.options.highlightHeader;
 
 			const tableLen = inputVue.table.length;
 
 			const arr = highlight ? [0, 2, tableLen + 3] : [0, tableLen + 2];
 
-			if (arr.includes(this.intel.index)) {
+			const isSpecial = arr.includes(this.intel.index);
 
-				return this.getRow(this.specialRowFiller);
-			}
+			const filler = isSpecial ? this.specialRowFiller : this.dataRowFiller;
 
-			return this.getRow(this.dataRowFiller);
+			return this.getRow(filler);
 		}
 	}
 }

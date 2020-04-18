@@ -5,11 +5,45 @@
 		<div class="ladder">
 
 			<label>
+				<p>ALign Header</p>
+				<select
+					@change="onChange($event, {key:'header'})"
+					v-model="columnsAlignment.header"
+				>
+					<!-- <option
+						v-for="(option, index) in alignmentsOptions"
+						v-bind:value="option"
+						:key="index"
+					>{{ option }}</option> -->
+					<option value="left">Left</option>
+					<option value="center">Center</option>
+					<option value="right">Right</option>
+				</select>
+			</label>
+
+			<div>
+				<label>
+					<p>ALign body rows</p>
+					<select
+						@change="onChange($event, {index, key:'body'})"
+						v-for="(col,index) in columnsCount"
+						:key="index"
+						v-model="columnsAlignment.body[index]"
+					>
+						<option value="left">Left</option>
+						<option value="center">Center</option>
+						<option value="right">Right</option>
+					</select>
+				</label>
+
+			</div>
+
+			<label>
 
 				<input
 					type="checkbox"
 					ref="highlight-header"
-					@change="highlightHeader_OnChange()"
+					v-model="highlightHeader"
 				>
 				<span>Highlight header</span>
 
@@ -20,7 +54,7 @@
 				<input
 					type="checkbox"
 					ref="same-width"
-					@change="sameWidth_OnChange()"
+					v-model="sameWidth"
 				>
 				<span>Same width columns</span>
 
@@ -34,7 +68,7 @@
 					ref="min-width"
 					min="2"
 					value="6"
-					@input="minimumWidth_OnInput()"
+					v-model="minimumWidth"
 				>
 
 			</label>
@@ -50,7 +84,8 @@
 							type="radio"
 							ref="mysql"
 							name="style"
-							@change="sytle_OnChange()"
+							value="mysql"
+							v-model="tableStyle.style"
 						>
 						<span>MySQL</span>
 
@@ -73,7 +108,8 @@
 							type="radio"
 							ref="ascii"
 							name="style"
-							@change="sytle_OnChange()"
+							value="ascii"
+							v-model="tableStyle.style"
 						>
 						<span>Ascii</span>
 
@@ -97,7 +133,8 @@
 										type="radio"
 										ref="ascii-double-border"
 										name="ascii-border-style"
-										@change="sytle_OnChange()"
+										value="double"
+										v-model="tableStyle.border"
 									>
 									<span>Double border</span>
 								</label>
@@ -107,7 +144,8 @@
 										type="radio"
 										ref="ascii-single-border"
 										name="ascii-border-style"
-										@change="sytle_OnChange()"
+										value="single"
+										v-model="tableStyle.border"
 									>
 									<span>Single border</span>
 								</label>
@@ -133,68 +171,62 @@ import { head } from './../../units/absx';
 
 export default {
 
-	methods: {
+	data() {
 
-		minimumWidth_OnInput() {
-
-			const outputVue = head(this.$root.$children).$refs['output'];
-
-			const { value } = this.$refs['min-width'];
-
-			outputVue.options.minimumWidth = value;
-		},
-
-		highlightHeader_OnChange() {
-
-			const outputVue = head(this.$root.$children).$refs['output'];
-
-			const { checked } = this.$refs['highlight-header'];
-
-			outputVue.options.highlightHeader = checked;
-		},
-
-		sameWidth_OnChange() {
-
-			const outputVue = head(this.$root.$children).$refs['output'];
-
-			const { checked } = this.$refs['same-width'];
-
-			outputVue.options.sameWidth = checked;
-		},
-
-		sytle_OnChange() {
-
-			const outputVue = head(this.$root.$children).$refs['output'];
-
-			const style = this.$refs['mysql'].checked ? 'mysql' : 'ascii';
-
-			outputVue.options.tableStyle.style = style;
-
-			const border = this.$refs['ascii-double-border'].checked ? 'double' : 'single';
-
-			outputVue.options.tableStyle.border = border;
-		}
+		return {
+			columnsAlignment: {
+				header: 'right',
+				body: ['right', 'right', 'right']
+			},
+			highlightHeader: true,
+			sameWidth: false,
+			minimumWidth: 6,
+			tableStyle: {
+				style: 'mysql',
+				border: 'double'
+			}
+		};
 
 	},
 
-	mounted() {
+	methods: {
 
-		const outputVue = head(this.$root.$children).$refs['output'];
+		onChange(event, parcel) {
 
-		const { minimumWidth, highlightHeader, sameWidth } = outputVue.options;
 
-		this.$refs['min-width'].value = minimumWidth;
+			console.log(parcel);
+			console.log('***********');
 
-		this.$refs['highlight-header'].checked = highlightHeader;
+			// const dataName = `${parcel.key}ColumnsAlignment`;
 
-		this.$refs['same-width'].checked = sameWidth;
+			// const align = this[dataName][parcel.index];
 
-		const { style, border } = outputVue.options.tableStyle;
 
-		this.$refs[style].checked = true;
+			const alignObj = this.columnsAlignment[parcel.key];
+			const align = alignObj[parcel.index] || alignObj;
 
-		this.$refs[`ascii-${border}-border`].checked = true;
-	}
+			// debugger;
+			// const parcel = { align, index, key: 'body' };
+
+			parcel.align = align;
+
+			window.EventVue.$emit('updateAlign', parcel);
+		}
+	},
+
+	computed: {
+
+		columnsCount() {
+
+			return this.$parent.columnsCount;
+		},
+
+		alignmentsOptions() {
+
+			return ['left', 'center', 'right'];
+		}
+	},
+
 
 }
 </script>

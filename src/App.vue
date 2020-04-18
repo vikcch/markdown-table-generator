@@ -23,6 +23,19 @@ export default {
 		'app-header': headerVue,
 		'app-input': inputVue,
 		'app-output': outputVue
+	},
+
+	mounted() {
+
+		document.body.addEventListener('keydown', (event) => {
+
+			const arrowsCode = [37, 38, 39, 40];
+
+			if (event.ctrlKey && arrowsCode.includes(event.keyCode)) {
+
+				event.preventDefault();
+			}
+		});
 	}
 }
 </script>

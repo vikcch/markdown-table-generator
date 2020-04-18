@@ -1,4 +1,4 @@
-import { padEdges, removeCharAt } from './fxnl';
+import { padEdges, removeCharAt, validator } from './fxnl';
 
 export const head = array => array[0];
 
