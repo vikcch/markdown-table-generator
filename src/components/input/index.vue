@@ -23,8 +23,7 @@
 
 			<tbody>
 
-				<app-row
-					ref="rrr"
+				<app-row					
 					v-for="(row, index) in table"
 					:key="index"
 					:intel="row"

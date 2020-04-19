@@ -6,7 +6,7 @@
 			type="text"
 			ref="cell"
 			:class="['cell', styleState, alignmentState]"
-			:value="intel.value"
+			v-model="text"
 			@input="onInput()"
 		>
 
@@ -28,7 +28,8 @@ export default {
 
 		return {
 
-			align: 'right'
+			align: 'right',			
+			text: this.intel.value
 		};
 	},
 
@@ -63,7 +64,7 @@ export default {
 		alignmentState() {
 
 			return `text-${this.align}`;
-		}
+		},
 	},
 
 	created() {

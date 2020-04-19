@@ -31,16 +31,7 @@ export default {
 	},
 
 	methods: {
-
-		// TODO:: meter em js-tips
-		// Em 'computed' não "forçava o update" em alterações nas _checkboxs_
-		// Funcionava com hack: `this.table.push([]); this.table.pop();`
-		// (TINHA O METODO MAKEROWS AQUI)
-
-		// Agora funciona em computed porque no 'input' > 'table options' estou a 
-		// altera a data() 'options' de 'output' que posteriormente envio para
-		// 'line.vue' pelas props (`:options="options"`, não está junto com intel)
-
+		
 		copyToClipboard_OnClick() {
 
 			const text = this.$refs['result'].innerText;

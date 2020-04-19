@@ -193,6 +193,8 @@ export default {
 
 		onChange(event, parcel) {
 
+			// FIXME:: mudo text do header, depois mudo o alinhamento, 
+			// aparece o texto original no header na input
 
 			console.log(parcel);
 			console.log('***********');

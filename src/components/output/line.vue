@@ -5,7 +5,8 @@
 </template>
 
 <script>
-import { head, removeLastChar } from '../../units/absx';
+import { head, removeLastChar, padSpacedEdges } from '../../units/absx';
+import { padEdges } from '../../units/fxnl';
 
 export default {
 
@@ -16,7 +17,7 @@ export default {
 
 	methods: {
 
-		getPad(index) {
+		getPad(columnIndex) {
 
 			const inputVue = head(this.$root.$children).$refs['input'];
 
@@ -24,20 +25,104 @@ export default {
 
 			const maxChars = isSameWidth
 				? inputVue.maxCharsAllColumns()
-				: inputVue.maxCharsColumn(index);
+				: inputVue.maxCharsColumn(columnIndex);
 
 			const minChars = this.options.minimumWidth;
 
 			return Math.max(minChars, maxChars);
 		},
 
-		getRow(fillers) {
+		getAlign(columnIndex) {
+
+			const highlight = this.options.highlightHeader;
+
+			const isHeaderRow = this.intel.index === 1;
+
+			if (highlight && isHeaderRow) {
+
+				return this.options.columnsAlignment.header;
+
+			} else {
+
+				return this.options.columnsAlignment.body[columnIndex];
+			}
+		},
+
+
+		getPaddedText(text, fillerPad, columnIndex) {
+
+			// const highlight = this.options.highlightHeader;
+
+			// const isHeaderRow = this.intel.index === 1;
+
+			// if (highlight && isHeaderRow) {
+
+			// 	const work = {
+
+			// 		left: text.padEnd(padCount, fillerPad),					
+			// 		center: padSpacedEdges(text, padCount),
+			// 		right: text.padStart(padCount, fillerPad),
+			// 	};
+
+			// 	const align = this.options.columnsAlignment.header;
+
+			// 	return work[align];
+			// }
+
+			// return text.padEnd(padCount, fillerPad);
+
+			const padCount = this.getPad(columnIndex);
+
+			const work = {
+
+				left: text.padEnd(padCount, fillerPad),
+				center: padEdges(fillerPad)(text, padCount),
+				right: text.padStart(padCount, fillerPad),
+			};
+
+			// 	const align = this.options.columnsAlignment[header];
+
+
+			const align = this.getAlign(columnIndex);
+
+			return work[align];
+
+
+		},
+
+		//       fillerPad
+		//   ↓      ↓ ↓      ↓
+		//  +--------+--------+ 
+		//  | Header | Header | 
+		//   ↑      ↑ ↑      ↑
+		//       fillerPad 
+
+
+		/* getRow(fillers) {
 
 			const rdc = (acc, cur, index) => {
 
 				const padCount = this.getPad(index);
 
-				const paddedText = cur.padStart(padCount, fillers.pad);
+				const paddedText = cur.padEnd(padCount, fillers.pad);
+
+				const innerCell = `${fillers.pad}${paddedText}${fillers.pad}`;
+
+				return `${acc}${innerCell}${fillers.columnSeparator}`;
+			};
+
+			const innerRow = removeLastChar(this.intel.value.reduce(rdc, ''));
+
+			return `${fillers.leftEdge}${innerRow}${fillers.rightEdge}`;
+		} */
+
+		getRow(fillers) {
+
+			const rdc = (acc, cur, index) => {
+
+				// const padCount = this.getPad(index);
+
+				const paddedText = this.getPaddedText(cur, fillers.pad, index);
 
 				const innerCell = `${fillers.pad}${paddedText}${fillers.pad}`;
 
@@ -53,17 +138,20 @@ export default {
 
 	computed: {
 
+
+
 		options() {
 
 			const inputVue = head(this.$root.$children).$refs['input'];
 
 			const options = inputVue.$refs['options'];
 
-			const { highlightHeader, sameWidth, minimumWidth } = options;
+			const { highlightHeader, sameWidth, minimumWidth, columnsAlignment } = options;
 
 			const { style, border } = options.tableStyle;
 
 			return {
+				columnsAlignment,
 				highlightHeader,
 				sameWidth,
 				minimumWidth,
