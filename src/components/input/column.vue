@@ -28,7 +28,7 @@ export default {
 
 		return {
 
-			align: 'right',			
+			align: 'right',
 			text: this.intel.value
 		};
 	},
@@ -43,7 +43,12 @@ export default {
 
 			const work = {
 
-				header: () => this.$parent.$data.tableHeader[index] = text,
+				header: () => {
+
+					const inputVue = head(this.$root.$children).$refs['input'];
+
+					inputVue.$data.tableHeader[index] = text;
+				},
 
 				body: () => this.$parent.$props.intel[index] = text,
 			};

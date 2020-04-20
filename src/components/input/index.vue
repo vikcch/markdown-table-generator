@@ -2,36 +2,18 @@
 
 	<div>
 
-		<app-table-calibrator :intel="{name: 'Row', key:'row', value: rowsCount}" />
+		<div class="train bm-l ">
 
-		<app-table-calibrator :intel="{name: 'Column', key:'column', value: columnsCount}" />
+			<app-table-calibrator :intel="{name: 'Row', key:'row', value: rowsCount}" />
 
-		<table
-			ref="table"
-			@keyup="onKeyUp"
-		>
+			<app-table-calibrator :intel="{name: 'Column', key:'column', value: columnsCount}" />
 
-			<thead>
+		</div>
 
-				<app-column
-					v-for="(col,index) in tableHeader"
-					:key="index"
-					:intel="{value:col, index:index, key:'header'}"
-				/>
-
-			</thead>
-
-			<tbody>
-
-				<app-row					
-					v-for="(row, index) in table"
-					:key="index"
-					:intel="row"
-				/>
-
-			</tbody>
-
-		</table>
+		<app-table
+			:tableHeader="tableHeader"
+			:table="table"
+		/>
 
 		<p>control + arrow to navigate</p>
 
@@ -50,14 +32,13 @@ import rowVue from './row.vue';
 import tableCalibratorVue from './table-calibrator.vue';
 import { head } from './../../units/absx.js';
 import tableOptionsVue from './table-options.vue';
+import tableVue from './table.vue';
 
 export default {
 
 	components: {
-
+		'app-table': tableVue,
 		'app-table-calibrator': tableCalibratorVue,
-		'app-column': columnVue,
-		'app-row': rowVue,
 		'app-table-options': tableOptionsVue
 	},
 
@@ -77,9 +58,7 @@ export default {
 
 			console.log(this.table);
 
-			// const outputVue = head(this.$root.$children).$refs['output'];
-
-			// console.log(outputVue.options.bodyColumnsAlignment);
+			console.log(this.$refs['options'].columnsAlignment);
 		},
 
 		maxCharsColumn(index) {
@@ -110,53 +89,7 @@ export default {
 			return Math.max(maxHeader, maxBody);
 		},
 
-		onKeyUp(event) {
 
-			const arrowsCode = [37, 38, 39, 40];
-
-			if (!event.ctrlKey || !arrowsCode.includes(event.keyCode)) {
-
-				return;
-			}
-
-			const { key } = event;
-
-			const tdFocused = document.activeElement.parentNode
-
-			const tds = this.$refs['table'].querySelectorAll('td');
-
-			const tdFocusedIndex = Array.from(tds).indexOf(tdFocused);
-
-			const coords = {
-
-				x: tdFocusedIndex % this.columnsCount,
-				y: Math.floor(tdFocusedIndex / this.columnsCount)
-			};
-
-			// coords (x,y) => zero based
-			const getIndex = ({ x, y }) => y * this.columnsCount + x;
-
-			const work = {
-
-				'ArrowUp': coords.y === 0
-					? getIndex({ x: coords.x, y: this.rowsCount })
-					: getIndex({ x: coords.x, y: coords.y - 1 }),
-
-				'ArrowLeft': coords.x === 0
-					? getIndex({ x: this.columnsCount - 1, y: coords.y })
-					: getIndex({ x: coords.x - 1, y: coords.y }),
-
-				'ArrowRight': coords.x === this.columnsCount - 1
-					? getIndex({ x: 0, y: coords.y })
-					: getIndex({ x: coords.x + 1, y: coords.y }),
-
-				'ArrowDown': coords.y === this.rowsCount
-					? getIndex({ x: coords.x, y: 0 })
-					: getIndex({ x: coords.x, y: coords.y + 1 }),
-			};
-
-			key in work && tds[work[key]].firstChild.focus();
-		}
 
 	},
 
@@ -172,6 +105,42 @@ export default {
 			return this.table.length;
 		},
 	},
+
+	watch: {
+
+		tableHeader(value) {
+
+			const bodyAlign = this.$refs['options'].columnsAlignment.body;
+
+			/* ********************* */
+			// const isAddingColumn = value.length - bodyAlign.length > 0;
+
+			// if (isAddingColumn) bodyAlign.push('right');
+			// else bodyAlign.pop();
+
+
+			/* ********************* */
+
+			// const key = value.length - bodyAlign.length;
+
+			// const work = {
+			// 	'1': () => bodyAlign.push('right'),
+			// 	'-1': () => bodyAlign.pop()
+			// };
+
+			// work[key].call();
+
+
+			/* ********************* */
+
+			const isAddingColumn = value.length - bodyAlign.length > 0;
+
+			const fn = isAddingColumn ? 'push' : 'pop';
+
+			bodyAlign[fn]('right');
+
+		}
+	}
 
 }
 </script>

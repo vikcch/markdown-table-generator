@@ -1,8 +1,8 @@
 <template>
 
-	<div>
+	<div class="badge">
 
-		<div class="ladder">
+		<div class="ladder spaced-v">
 
 			<label>
 				<p>ALign Header</p>
@@ -25,6 +25,7 @@
 				<label>
 					<p>ALign body rows</p>
 					<select
+						class="rm-xs"
 						@change="onChange($event, {index, key:'body'})"
 						v-for="(col,index) in columnsCount"
 						:key="index"
@@ -35,7 +36,6 @@
 						<option value="right">Right</option>
 					</select>
 				</label>
-
 			</div>
 
 			<label>
@@ -53,6 +53,17 @@
 
 				<input
 					type="checkbox"
+					ref="spreadsheet"
+					v-model="spreadsheet"
+				>
+				<span>Spreadsheet</span>
+
+			</label>
+
+			<label>
+
+				<input
+					type="checkbox"
 					ref="same-width"
 					v-model="sameWidth"
 				>
@@ -62,7 +73,7 @@
 
 			<label>
 
-				<span>Columns minimum width</span>
+				<p>Columns minimum width</p>
 				<input
 					type="number"
 					ref="min-width"
@@ -78,7 +89,7 @@
 
 				<div class="train-drift">
 
-					<label class="rm-xl">
+					<label :class="['inner-badge rm-xl', styleStateMySQL]">
 
 						<input
 							type="radio"
@@ -102,7 +113,7 @@
 
 					</label>
 
-					<label>
+					<label :class="['inner-badge rm-xl', styleStateASCII]">
 
 						<input
 							type="radio"
@@ -156,6 +167,31 @@
 
 					</label>
 
+					<label :class="['inner-badge rm-xl', styleStateHTML]">
+
+						<input
+							type="radio"
+							ref="html"
+							name="style"
+							value="html"
+							v-model="tableStyle.style"
+						>
+						<span>HTML</span>
+
+						<div>
+							<pre class="ladder">
+                            <code class="demo">&lt;table&gt;</code>
+                            <code class="demo">    &lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;</code>
+                            <code class="demo">    &lt;/thead&gt;</code>
+                            <code class="demo">    &lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;</code>
+                            <code class="demo">    &lt;/tbody&gt;</code>
+                            <code class="demo">&lt;/table&gt;</code>
+                            
+                            </pre>
+						</div>
+
+					</label>
+
 				</div>
 
 			</div>
@@ -179,6 +215,7 @@ export default {
 				body: ['right', 'right', 'right']
 			},
 			highlightHeader: true,
+			spreadsheet: false,
 			sameWidth: false,
 			minimumWidth: 6,
 			tableStyle: {
@@ -193,26 +230,17 @@ export default {
 
 		onChange(event, parcel) {
 
-			// FIXME:: mudo text do header, depois mudo o alinhamento, 
-			// aparece o texto original no header na input
-
-			console.log(parcel);
-			console.log('***********');
-
-			// const dataName = `${parcel.key}ColumnsAlignment`;
-
-			// const align = this[dataName][parcel.index];
-
-
 			const alignObj = this.columnsAlignment[parcel.key];
 			const align = alignObj[parcel.index] || alignObj;
-
-			// debugger;
-			// const parcel = { align, index, key: 'body' };
 
 			parcel.align = align;
 
 			window.EventVue.$emit('updateAlign', parcel);
+		},
+
+		styleStateTableStyle(event) {
+
+			console.log(event);
 		}
 	},
 
@@ -226,9 +254,36 @@ export default {
 		alignmentsOptions() {
 
 			return ['left', 'center', 'right'];
-		}
+		},
+
+		styleStateMySQL() {
+
+			return this.tableStyle.style === 'mysql' ? 'table-style--selected' : '';
+		},
+
+		styleStateASCII() {
+
+			return this.tableStyle.style === 'ascii' ? 'table-style--selected' : '';
+		},
+
+		styleStateHTML() {
+
+			return this.tableStyle.style === 'html' ? 'table-style--selected' : '';
+		},
+
 	},
 
+	watch: {
+
+		'tableStyle.style'(value) {
+
+			const outputVue = head(this.$root.$children).$refs['output'];
+
+			outputVue.isHTML = this.tableStyle.style === 'html';
+		}
+
+
+	}
 
 }
 </script>
@@ -238,6 +293,29 @@ code.demo {
 	/* FIXME:: size */
 	/* font-family: "Courier New", Courier, monospace; */
 	/* font-size: 8pt; */
-	font-size: 12pt;
+	font-size: 10pt;
+}
+
+.badge {
+	padding: 8px;
+	background-color: #fafafa;
+	border-radius: 3px;
+	border: 1px solid #b4b4b4;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2),
+		0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+}
+
+.inner-badge {
+	padding: 8px;
+	border-radius: 3px;
+	border: 1px solid #b4b4b4;
+}
+
+.spaced-v > * + * {
+	margin-top: 8px;
+}
+
+.table-style--selected {
+	background-image: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05));
 }
 </style>

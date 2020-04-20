@@ -12,20 +12,19 @@ import './assets/global.css';
 window.EventVue = new Vue;
 
 new Vue({
-  render: h => h(App),
+	render: h => h(App),
 }).$mount('#app');
 
 // STOPSHIP:: não usar varios index.vue... o debugger falha no browser
 
-// TODO:: Spreadsheet (numeros antes da primeira coluna)
-
 // TODO:: remover absx e fxnl desnecessarios
-
-// TODO:: alinhamento do header e do body
 
 // TODO:: desintalar sweetAlert
 
 // TODO:: remomear column.vue para cell
 
+// TODO:: comentário... 14 estilos => https://ozh.github.io/ascii-tables/
 
+// TODO:: estilo html <table></table>
 
+// TODO:: hand nos tableStyles label

@@ -10,7 +10,7 @@ export const padEdges = edges => (string, count) => {
 
     const isOdd = (count - string.length) % 2 === 1;
 
-    const text = isOdd ? ` ${string}` : string;
+    const text = isOdd ? `${edges}${string}` : string;
 
     return `${edges.repeat(countSide)}${text}${edges.repeat(countSide)}`;
 };
@@ -19,4 +19,7 @@ export const removeCharAt = index => string => string.slice(0, index) + string.s
 
 export const validator = (...tests) => obj => tests.every(fn => fn(obj));
 
-export default { makePrefixer, makeSufixer, removeCharAt, validator };
+export const addTextToTag = tag => text => `<${tag}>${text}</${tag}>`;
+
+export default { makePrefixer, makeSufixer, removeCharAt, validator, addTextToTag };
+

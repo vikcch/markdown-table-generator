@@ -1,8 +1,8 @@
 <template>
 
-	<div>
+	<div class="badge rm-xl">
 
-		<p>{{intel.name}}s:</p>
+		<p class="bm-s">{{intel.name}}s:</p>
 
 		<div class="train">
 
@@ -10,14 +10,14 @@
 				:class="['button', styleStateRed]"
 				@click="remove()"
 				:disabled="isDisabled"
-			>Remove {{ intel.name }}</button>
+			>-</button>
 
 			<p class="intel-value"> {{ intel.value }}</p>
 
 			<button
 				class="button button--green"
 				@click="add()"
-			>Add {{ intel.name }}</button>
+			>+</button>
 
 		</div>
 
@@ -102,10 +102,13 @@ export default {
 }
 
 .button {
-	padding: 10px;
+	padding: 6px 10px;
 	border: none;
 	border-radius: 6px;
 	cursor: pointer;
+	font-size: 18px;
+	font-family: "Courier New", Courier, monospace;
+	font-weight: bold;
 }
 
 .button:active {
@@ -124,6 +127,15 @@ export default {
 
 	width: 50px;
 	text-align: center;
+}
+
+.badge {
+	padding: 8px;
+	background-color: #fafafa;
+	border-radius: 3px;
+	border: 1px solid #b4b4b4;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2),
+		0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
 }
 </style>
 
