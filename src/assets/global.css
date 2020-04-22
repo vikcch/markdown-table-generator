@@ -48,6 +48,10 @@
     margin-right: 2px;
 }
 
+.rm-s {
+    margin-right: 4px;
+}
+
 input[type="text"], select {
     width: 96px;
 }
@@ -58,6 +62,10 @@ input[type="checkbox"], input[type="radio"] {
 
 input[type="number"] {
     width: 64px;
+}
+
+.pointer {
+    cursor: pointer;
 }
 
 /* input:not([type="text"]){

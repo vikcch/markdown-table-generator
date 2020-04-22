@@ -47,7 +47,7 @@ export default {
 
 					const inputVue = head(this.$root.$children).$refs['input'];
 
-					inputVue.$data.tableHeader[index] = text;
+					inputVue.$data.tableHead[index] = text;
 				},
 
 				body: () => this.$parent.$props.intel[index] = text,
@@ -55,7 +55,8 @@ export default {
 
 			work[this.intel.key].call();
 
-			head(this.$root.$children).$refs['output'].$forceUpdate();
+			// head(this.$root.$children).$refs['output'].$forceUpdate();
+			head(this.$root.$children).$refs['output'].updateHack();
 		}
 	},
 

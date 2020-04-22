@@ -1,20 +1,20 @@
 <template>
 
-	<div class="badge">
+	<div>
 
-		<div class="ladder spaced-v">
+		<div
+			class="badge ladder spaced-v bm-l"
+			:class="stateNonHTMLStyleParent"
+		>
 
 			<label>
 				<p>ALign Header</p>
 				<select
+					:class="stateNonHTMLStyle"
+					:disabled="isHTMLStyle"
 					@change="onChange($event, {key:'header'})"
 					v-model="columnsAlignment.header"
 				>
-					<!-- <option
-						v-for="(option, index) in alignmentsOptions"
-						v-bind:value="option"
-						:key="index"
-					>{{ option }}</option> -->
 					<option value="left">Left</option>
 					<option value="center">Center</option>
 					<option value="right">Right</option>
@@ -25,7 +25,8 @@
 				<label>
 					<p>ALign body rows</p>
 					<select
-						class="rm-xs"
+						:class="['rm-xs',stateNonHTMLStyle]"
+						:disabled="isHTMLStyle"
 						@change="onChange($event, {index, key:'body'})"
 						v-for="(col,index) in columnsCount"
 						:key="index"
@@ -38,33 +39,39 @@
 				</label>
 			</div>
 
-			<label>
+			<label :class="stateNonHTMLStyle">
 
 				<input
 					type="checkbox"
 					ref="highlight-header"
+					:class="stateNonHTMLStyle"
+					:disabled="isHTMLStyle"
 					v-model="highlightHeader"
 				>
 				<span>Highlight header</span>
 
 			</label>
 
-			<label>
+			<label :class="stateNonHTMLStyle">
 
 				<input
 					type="checkbox"
 					ref="spreadsheet"
+					:class="stateNonHTMLStyle"
+					:disabled="isHTMLStyle"
 					v-model="spreadsheet"
 				>
 				<span>Spreadsheet</span>
 
 			</label>
 
-			<label>
+			<label :class="stateNonHTMLStyle">
 
 				<input
 					type="checkbox"
 					ref="same-width"
+					:class="stateNonHTMLStyle"
+					:disabled="isHTMLStyle"
 					v-model="sameWidth"
 				>
 				<span>Same width columns</span>
@@ -79,29 +86,33 @@
 					ref="min-width"
 					min="2"
 					value="6"
+					:disabled="isHTMLStyle"
 					v-model="minimumWidth"
 				>
 
 			</label>
 
-			<div>
-				<p>Table style:</p>
+		</div>
 
-				<div class="train-drift">
+		<div class="badge spaced-v">
 
-					<label :class="['inner-badge rm-xl', styleStateMySQL]">
+			<p>Table style:</p>
 
-						<input
-							type="radio"
-							ref="mysql"
-							name="style"
-							value="mysql"
-							v-model="tableStyle.style"
-						>
-						<span>MySQL</span>
+			<div class="train-drift">
 
-						<div>
-							<pre class="ladder">
+				<label :class="['inner-badge pointer rm-xl', styleStateMySQL]">
+
+					<input
+						type="radio"
+						ref="mysql"
+						name="style"
+						value="mysql"
+						v-model="tableStyle.style"
+					>
+					<span>MySQL</span>
+
+					<div>
+						<pre class="ladder">
                             <code class="demo">+--------+--------+</code>
                             <code class="demo">| Header | Header |</code>
                             <code class="demo">+--------+--------+</code>
@@ -109,25 +120,25 @@
                             <code class="demo">|   data |   data |</code>
                             <code class="demo">+--------+--------+</code>
                             </pre>
-						</div>
+					</div>
 
-					</label>
+				</label>
 
-					<label :class="['inner-badge rm-xl', styleStateASCII]">
+				<label :class="['inner-badge pointer rm-xl', styleStateASCII]">
 
-						<input
-							type="radio"
-							ref="ascii"
-							name="style"
-							value="ascii"
-							v-model="tableStyle.style"
-						>
-						<span>Ascii</span>
+					<input
+						type="radio"
+						ref="ascii"
+						name="style"
+						value="ascii"
+						v-model="tableStyle.style"
+					>
+					<span>Ascii</span>
 
-						<div class="train">
+					<div class="train">
 
-							<div>
-								<pre class="ladder">
+						<div>
+							<pre class="ladder">
 								<code class="demo">╔════════╤════════╗</code>
 								<code class="demo">║ Header │ Header ║</code>
 								<code class="demo">╟────────┼────────╢</code>
@@ -135,51 +146,52 @@
 								<code class="demo">║   data │   data ║</code>
 								<code class="demo">╚════════╧════════╝</code>
 								</pre>
-							</div>
+						</div>
 
-							<div class="ladder lm-m">
+						<div class="ladder lm-m">
 
-								<label>
-									<input
-										type="radio"
-										ref="ascii-double-border"
-										name="ascii-border-style"
-										value="double"
-										v-model="tableStyle.border"
-									>
-									<span>Double border</span>
-								</label>
+							<label class="pointer">
+								<input
+									type="radio"
+									ref="ascii-double-border"
+									name="ascii-border-style"
+									value="double"
+									v-model="tableStyle.border"
+								>
+								<span>Double border</span>
+							</label>
 
-								<label>
-									<input
-										type="radio"
-										ref="ascii-single-border"
-										name="ascii-border-style"
-										value="single"
-										v-model="tableStyle.border"
-									>
-									<span>Single border</span>
-								</label>
-
-							</div>
+							<label class="pointer">
+								<input
+									type="radio"
+									ref="ascii-single-border"
+									name="ascii-border-style"
+									value="single"
+									v-model="tableStyle.border"
+								>
+								<span>Single border</span>
+							</label>
 
 						</div>
 
-					</label>
+					</div>
 
-					<label :class="['inner-badge rm-xl', styleStateHTML]">
+				</label>
 
-						<input
-							type="radio"
-							ref="html"
-							name="style"
-							value="html"
-							v-model="tableStyle.style"
-						>
-						<span>HTML</span>
+				<label :class="['inner-badge pointer rm-xl', styleStateHTML]">
 
-						<div>
-							<pre class="ladder">
+					<input
+						type="radio"
+						ref="html"
+						name="style"
+						value="html"
+						class="pointer"
+						v-model="tableStyle.style"
+					>
+					<span>HTML</span>
+
+					<div>
+						<pre class="ladder">
                             <code class="demo">&lt;table&gt;</code>
                             <code class="demo">    &lt;thead&gt;&lt;tr&gt;&lt;th&gt;&lt;/th&gt;&lt;/tr&gt;</code>
                             <code class="demo">    &lt;/thead&gt;</code>
@@ -188,11 +200,9 @@
                             <code class="demo">&lt;/table&gt;</code>
                             
                             </pre>
-						</div>
+					</div>
 
-					</label>
-
-				</div>
+				</label>
 
 			</div>
 
@@ -268,8 +278,23 @@ export default {
 
 		styleStateHTML() {
 
-			return this.tableStyle.style === 'html' ? 'table-style--selected' : '';
+			return this.isHTMLStyle ? 'table-style--selected' : '';
 		},
+
+		stateNonHTMLStyle() {
+
+			return this.isHTMLStyle ? '' : 'pointer';
+		},
+
+		stateNonHTMLStyleParent() {
+
+			return this.isHTMLStyle ? 'dark' : '';
+		},
+
+		isHTMLStyle() {
+
+			return this.tableStyle.style === 'html';
+		}
 
 	},
 
@@ -281,18 +306,12 @@ export default {
 
 			outputVue.isHTML = this.tableStyle.style === 'html';
 		}
-
-
 	}
-
 }
 </script>
 
 <style scoped>
 code.demo {
-	/* FIXME:: size */
-	/* font-family: "Courier New", Courier, monospace; */
-	/* font-size: 8pt; */
 	font-size: 10pt;
 }
 
@@ -313,6 +332,10 @@ code.demo {
 
 .spaced-v > * + * {
 	margin-top: 8px;
+}
+
+.dark {
+	background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
 }
 
 .table-style--selected {

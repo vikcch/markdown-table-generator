@@ -2,7 +2,7 @@
 
 	<tr>
 
-		<app-column
+		<app-cell
 			v-for="(col,index) in intel"
 			:key="index"
 			:intel="{value:col, index:index, key:'body'}"
@@ -13,13 +13,14 @@
 </template>
 
 <script>
-import columnVue from './column.vue';
+import cellVue from './cell.vue'
+
 
 export default {
 
 	components: {
 
-		'app-column': columnVue
+		'app-cell': cellVue
 	},
 
 	props: {

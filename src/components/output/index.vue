@@ -4,61 +4,69 @@
 
 		<p>Output:</p>
 
-		<span>Copied!</span>
+		<app-button-copied ref="button-copied" />
 
-		<button @click="copyToClipboard_OnClick()">Copy to Clipboard</button>
+		<div
+			ref="result"
+			:key="rerenderHack"
+		>
 
-		<div ref="result">
+			<div v-if="isHTML">
+				<pre class="code"><app-html-table :intel="htmlPartsMaker"/></pre>
 
-			<pre class="code"><div v-if="isHTML">{{htmlTable}}</div><div v-else><app-line			
-            v-for="(row,index) in makedRows"
-            :key="index"
-            :intel="{value:row, index:index}" /></div></pre>
+			</div>
+
+			<div v-else>
+				<pre class="code"><div><app-line
+					v-for="(row,index) in makedRows"
+					:key="index"
+					:intel="{value:row, index:index}"
+				/></div></pre>
+			</div>
 
 		</div>
+
 	</div>
 
 </template>
 
 <script>
+import htmlTableVue from './html-table';
 import lineVue from './line.vue';
 import { head } from '../../units/absx';
 import { addTextToTag } from '../../units/fxnl';
+import buttonCopiedVue from './button-copied.vue';
 
 export default {
 
 	components: {
 
-		'app-line': lineVue
+		'app-button-copied': buttonCopiedVue,
+		'app-html-table': htmlTableVue,
+		'app-line': lineVue,
 	},
 
 	data() {
 
 		return {
 
-			isHTML: false
+			isHTML: false,
+			rerenderHack: 0
 		}
 	},
 
 	methods: {
 
-		copyToClipboard_OnClick() {
+		updateHack() {
 
-			const text = this.$refs['result'].innerText;
-
-			navigator.clipboard.writeText(text).then(function () {
-
-				console.log('copiado', text);
-
-			}, function (err) {
-
-
-				/* eslint-disable-next-line */
-				console.error(err);
-			});
-
+			this.$data.rerenderHack++;
 		}
 
+	},
+
+	updated() {
+
+		this.$refs['button-copied'].copied = false;		
 	},
 
 	computed: {
@@ -73,51 +81,40 @@ export default {
 		},
 
 
-		// specialRow => Para ser 'top', 'bottom' ou 'entre header e body'
+		// specialRow: Para ser 'top', 'bottom' ou 'entre header e body'
 		makedRows() {
 
 			const inputVue = head(this.$root.$children).$refs['input'];
 
 			const specialRow = Array(inputVue.columnsCount).fill('');
 
-			const result = [specialRow, inputVue.tableHeader];
+			const result = [specialRow, inputVue.tableHead];
 
 			if (this.highlightHeader) {
 
 				result.push(specialRow);
 			}
 
-			result.push(...inputVue.table, specialRow);
+			result.push(...inputVue.tableBody, specialRow);
+
+			console.log('maked rows');
 
 			return result;
 		},
 
-		htmlTable() {
+		htmlPartsMaker() {
 
 			const inputVue = head(this.$root.$children).$refs['input'];
 
-			const tr = addTextToTag('tr');
-			const th = addTextToTag('th');
-			const td = addTextToTag('td');
+			const { tableHead, tableBody } = inputVue;
 
-			const thEls = inputVue.tableHeader.map(v => th(v)).join('');
+			console.log('htmlPartsMaker');
 
-			// TODO:: usar pipe
-			const thead = addTextToTag('thead')(tr(thEls));
-
-			const makeTRs = arr => tr(arr.map(v => td(v)).join(''));
-
-			const trEls = inputVue.table.map(makeTRs).join('');
-
-			const tbody = addTextToTag('tbody')(trEls);
-
-			const table = addTextToTag('table')(`${thead}${tbody}`);
-
-			return table;
+			return { tableHead, tableBody };
 		}
-	},
-
+	}
 }
+
 </script>
 
 <style scoped>

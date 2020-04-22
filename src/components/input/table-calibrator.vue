@@ -38,12 +38,12 @@ export default {
 
 			const work = {
 
-				row: () => this.$parent.table.pop(),
+				row: () => this.$parent.tableBody.pop(),
 
 				column: () => {
 
-					this.$parent.tableHeader.pop();
-					this.$parent.table.forEach(e => e.pop());
+					this.$parent.tableHead.pop();
+					this.$parent.tableBody.forEach(e => e.pop());
 				}
 			};
 
@@ -60,13 +60,13 @@ export default {
 				row: () => {
 
 					const arr = Array(columnsCount).fill('');
-					this.$parent.table.push(arr);
+					this.$parent.tableBody.push(arr);
 				},
 
 				column: () => {
 
-					this.$parent.tableHeader.push('');
-					this.$parent.table.forEach(e => e.push(''));
+					this.$parent.tableHead.push('');
+					this.$parent.tableBody.forEach(e => e.push(''));
 				},
 			};
 
@@ -94,21 +94,25 @@ export default {
 .button--red {
 	color: white;
 	background-color: rgb(221, 51, 51);
+	border: 1px solid #dc3545;
 }
 
 .button--green {
 	color: white;
 	background-color: #218838;
+	border: 1px solid #1e7e34;
 }
 
 .button {
 	padding: 6px 10px;
-	border: none;
 	border-radius: 6px;
 	cursor: pointer;
 	font-size: 18px;
 	font-family: "Courier New", Courier, monospace;
 	font-weight: bold;
+
+	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.3);
+	box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset;
 }
 
 .button:active {

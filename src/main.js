@@ -21,10 +21,6 @@ new Vue({
 
 // TODO:: desintalar sweetAlert
 
-// TODO:: remomear column.vue para cell
-
 // TODO:: comentário... 14 estilos => https://ozh.github.io/ascii-tables/
 
-// TODO:: estilo html <table></table>
-
-// TODO:: hand nos tableStyles label
+// TODO:: css juntar badges

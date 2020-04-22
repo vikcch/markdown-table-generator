@@ -3,7 +3,10 @@
 		id="app"
 		class="page-container"
 	>
-		<app-header msg="MARKDOWN ASCII TABLE GENERATOR" />
+		<app-header
+			class="bm-l"
+			msg="MARKDOWN ASCII TABLE GENERATOR"
+		/>
 
 		<app-input ref="input" />
 

@@ -218,7 +218,7 @@ export default {
 					columnSeparator: selected.bottom[2], rightEdge: selected.bottom[3]
 				}
 			};
-			
+
 			const key = this.intel.index.toString();
 
 			return key in work ? work[key] : work.def;
@@ -288,7 +288,12 @@ export default {
 
 			return spreadsheet ? this.addSpreadsheet(row, filler) : row;
 		}
-	}
+	},
+
+	updated() {
+
+		this.$parent.$refs['button-copied'].copied = false;
+	},
 }
 </script>
 
