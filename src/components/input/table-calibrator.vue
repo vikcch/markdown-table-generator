@@ -125,6 +125,10 @@ export default {
 	/* filter: brightness(95%); */
 }
 
+.button:disabled {
+	border: 1px solid #dbdbdb;
+}
+
 .intel-value {
 	font-size: 18px;
 	font-weight: bold;

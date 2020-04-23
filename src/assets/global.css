@@ -24,6 +24,11 @@
     align-items: flex-start;
 }
 
+.divorced {
+    display: flex;
+    justify-content: space-between;
+}
+
 .rm-xl {
     margin-right: 32px;
 }
@@ -71,3 +76,7 @@ input[type="number"] {
 /* input:not([type="text"]){
     width: 32px;
 } */
+
+h2 {
+    font-size: 22px;
+}

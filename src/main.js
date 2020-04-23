@@ -24,3 +24,20 @@ new Vue({
 // TODO:: comentário... 14 estilos => https://ozh.github.io/ascii-tables/
 
 // TODO:: css juntar badges
+
+
+class Car {
+	constructor(brand) {
+
+		this._brand = brand;
+	}
+
+	showCar = () => () => {
+
+		console.log(this._brand);
+	}
+
+}
+
+const v = new Car('ffff');
+v.showCar()();

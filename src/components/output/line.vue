@@ -130,34 +130,53 @@ export default {
 		 * @param {Object} 		fillers			blueprint acima		
 		 * @return {String}		
 		 */
-		addSpreadsheet(row, fillers) {
+		addSpreadsheet: function (fillers) {
 
-			const inputVue = head(this.$root.$children).$refs['input'];
+			return (row) => {
 
-			const isSpecialRow = fillers.pad !== ' ';
+				const inputVue = head(this.$root.$children).$refs['input'];
 
-			const { rowsCount } = inputVue;
+				const isSpecialRow = fillers.pad !== ' ';
 
-			const highlight = this.options.highlightHeader;
+				const { rowsCount } = inputVue;
 
-			const isHeaderRow = this.intel.index === 1;
+				const highlight = this.options.highlightHeader;
 
-			const lineNumber = this.intel.index - (highlight ? 2 : 0);
+				const isHeaderRow = this.intel.index === 1;
 
-			const rowsCountLen = (rowsCount + (highlight ? 0 : 1)).toString().length + 1;
+				const lineNumber = this.intel.index - (highlight ? 2 : 0);
 
-			const padCount = Math.max(rowsCountLen, 2);
+				const rowsCountLen = (rowsCount + (highlight ? 0 : 1)).toString().length + 1;
 
-			const cellText = isSpecialRow || highlight && isHeaderRow
-				? ''.padStart(padCount, fillers.pad)
-				: lineNumber.toString().padStart(padCount, ' ');
+				const padCount = Math.max(rowsCountLen, 2);
 
-			const innerCell = `${fillers.pad}${cellText}${fillers.pad}`;
+				const cellText = isSpecialRow || highlight && isHeaderRow
+					? ''.padStart(padCount, fillers.pad)
+					: lineNumber.toString().padStart(padCount, ' ');
 
-			const tail = row.slice(1);
+				const innerCell = `${fillers.pad}${cellText}${fillers.pad}`;
 
-			return `${head(row)}${innerCell}${fillers.columnSeparator}${tail}`;
+				const tail = row.slice(1);
+
+				return `${head(row)}${innerCell}${fillers.columnSeparator}${tail}`;
+			}
+		},
+
+		addComment(row) {
+
+			const { style, before, after } = this.options.commentStyle;
+
+			const work = {
+
+				custom: `${before}${row}${after}`,
+				doubleslant: `// ${row} `,
+				slantsplat: `/* ${row} */`,
+				xml: `<!-- ${row} -->`,
+			};
+
+			return work[style];
 		}
+
 	},
 
 	computed: {
@@ -284,15 +303,27 @@ export default {
 
 			const row = this.getRow(filler);
 
-			const spreadsheet = this.options.spreadsheet;
+			// const spreadsheet = this.options.spreadsheet;
 
-			return spreadsheet ? this.addSpreadsheet(row, filler) : row;
+			// return spreadsheet ? this.addSpreadsheet(row, filler) : row;
+			// return spreadsheet ? this.addSpreadsheet(filler)(row) : row;
+
+			// TODO:: pra fxnl ou absx
+			const pipe = (...fns) => arg => fns.reduce((acc, cur) => cur(acc), arg);
+
+			const { spreadsheet } = this.options;
+
+			const sprFilledOrSkip = spreadsheet ? this.addSpreadsheet(filler) : r => r;
+
+			return pipe(sprFilledOrSkip, this.addComment)(row);
 		}
 	},
 
 	updated() {
 
 		this.$parent.$refs['button-copied'].copied = false;
+
+		console.log('em line');
 	},
 }
 </script>

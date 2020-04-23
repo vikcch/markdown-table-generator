@@ -9,7 +9,7 @@
 			<app-table-calibrator :intel="{name: 'Column', key:'column', value: columnsCount}" />
 
 		</div>
-
+		
 		<app-table
 			class="bm-l"
 			:tableHead="tableHead"

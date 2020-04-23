@@ -2,6 +2,8 @@
 
 	<div class="badge scroll-auto">
 
+		<h2 class="bm-m">Input:</h2>
+
 		<table
 			class="bm-m"
 			ref="table"
@@ -126,7 +128,7 @@ kbd {
 		0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
 	color: #333;
 	display: inline-block;
-	font-size: 0.85em;
+	font-size: 12px;
 	font-weight: 700;
 	line-height: 1;
 	padding: 2px 4px;

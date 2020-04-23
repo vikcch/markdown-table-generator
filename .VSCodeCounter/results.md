@@ -1,10 +1,10 @@
 # Summary
 
-Date : 2020-04-16 16:48:00
+Date : 2020-04-22 13:39:34
 
 Directory c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator
 
-Total : 18 files,  12559 codes, 26 comments, 301 blanks, all 12886 lines
+Total : 21 files,  13124 codes, 107 comments, 500 blanks, all 13731 lines
 
 [details](details.md)
 
@@ -12,22 +12,22 @@ Total : 18 files,  12559 codes, 26 comments, 301 blanks, all 12886 lines
 | language | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
 | JSON | 2 | 11,930 | 0 | 1 | 11,931 |
-| Vue | 9 | 539 | 22 | 266 | 827 |
-| JavaScript | 4 | 28 | 2 | 22 | 52 |
-| CSS | 1 | 27 | 1 | 5 | 33 |
+| Vue | 12 | 1,064 | 94 | 446 | 1,604 |
+| CSS | 1 | 61 | 4 | 17 | 82 |
+| JavaScript | 4 | 34 | 7 | 29 | 70 |
 | Markdown | 1 | 19 | 0 | 6 | 25 |
-| HTML | 1 | 16 | 1 | 1 | 18 |
+| HTML | 1 | 16 | 2 | 1 | 19 |
 
 ## Directories
 | path | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| . | 18 | 12,559 | 26 | 301 | 12,886 |
-| public | 1 | 16 | 1 | 1 | 18 |
-| src | 13 | 589 | 25 | 292 | 906 |
-| src\assets | 1 | 27 | 1 | 5 | 33 |
-| src\components | 8 | 503 | 22 | 257 | 782 |
-| src\components\input | 5 | 360 | 5 | 182 | 547 |
-| src\components\output | 2 | 127 | 17 | 70 | 214 |
-| src\units | 2 | 13 | 0 | 11 | 24 |
+| . | 21 | 13,124 | 107 | 500 | 13,731 |
+| public | 1 | 16 | 2 | 1 | 19 |
+| src | 16 | 1,154 | 105 | 491 | 1,750 |
+| src\assets | 1 | 61 | 4 | 17 | 82 |
+| src\components | 11 | 1,017 | 94 | 432 | 1,543 |
+| src\components\input | 6 | 654 | 4 | 263 | 921 |
+| src\components\output | 4 | 347 | 90 | 164 | 601 |
+| src\units | 2 | 18 | 2 | 18 | 38 |
 
 [details](details.md)

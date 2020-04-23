@@ -1,31 +1,31 @@
-Date : 2020-04-16 16:48:00
+Date : 2020-04-22 13:39:34
 Directory : c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator
-Total : 18 files,  12559 codes, 26 comments, 301 blanks, all 12886 lines
+Total : 21 files,  13124 codes, 107 comments, 500 blanks, all 13731 lines
 
 Languages
 +------------+------------+------------+------------+------------+------------+
 | language   | files      | code       | comment    | blank      | total      |
 +------------+------------+------------+------------+------------+------------+
 | JSON       |          2 |     11,930 |          0 |          1 |     11,931 |
-| Vue        |          9 |        539 |         22 |        266 |        827 |
-| JavaScript |          4 |         28 |          2 |         22 |         52 |
-| CSS        |          1 |         27 |          1 |          5 |         33 |
+| Vue        |         12 |      1,064 |         94 |        446 |      1,604 |
+| CSS        |          1 |         61 |          4 |         17 |         82 |
+| JavaScript |          4 |         34 |          7 |         29 |         70 |
 | Markdown   |          1 |         19 |          0 |          6 |         25 |
-| HTML       |          1 |         16 |          1 |          1 |         18 |
+| HTML       |          1 |         16 |          2 |          1 |         19 |
 +------------+------------+------------+------------+------------+------------+
 
 Directories
 +-----------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
 | path                                                                                                                                          | files      | code       | comment    | blank      | total      |
 +-----------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
-| .                                                                                                                                             |         18 |     12,559 |         26 |        301 |     12,886 |
-| public                                                                                                                                        |          1 |         16 |          1 |          1 |         18 |
-| src                                                                                                                                           |         13 |        589 |         25 |        292 |        906 |
-| src\assets                                                                                                                                    |          1 |         27 |          1 |          5 |         33 |
-| src\components                                                                                                                                |          8 |        503 |         22 |        257 |        782 |
-| src\components\input                                                                                                                          |          5 |        360 |          5 |        182 |        547 |
-| src\components\output                                                                                                                         |          2 |        127 |         17 |         70 |        214 |
-| src\units                                                                                                                                     |          2 |         13 |          0 |         11 |         24 |
+| .                                                                                                                                             |         21 |     13,124 |        107 |        500 |     13,731 |
+| public                                                                                                                                        |          1 |         16 |          2 |          1 |         19 |
+| src                                                                                                                                           |         16 |      1,154 |        105 |        491 |      1,750 |
+| src\assets                                                                                                                                    |          1 |         61 |          4 |         17 |         82 |
+| src\components                                                                                                                                |         11 |      1,017 |         94 |        432 |      1,543 |
+| src\components\input                                                                                                                          |          6 |        654 |          4 |        263 |        921 |
+| src\components\output                                                                                                                         |          4 |        347 |         90 |        164 |        601 |
+| src\units                                                                                                                                     |          2 |         18 |          2 |         18 |         38 |
 +-----------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
 
 Files
@@ -36,19 +36,22 @@ Files
 | c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\babel.config.js                           | JavaScript |          5 |          0 |          1 |          6 |
 | c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\package-lock.json                         | JSON       |     11,884 |          0 |          1 |     11,885 |
 | c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\package.json                              | JSON       |         46 |          0 |          0 |         46 |
-| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\public\index.html                         | HTML       |         16 |          1 |          1 |         18 |
-| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\App.vue                               | Vue        |         36 |          0 |          9 |         45 |
-| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\assets\global.css                     | CSS        |         27 |          1 |          5 |         33 |
+| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\public\index.html                         | HTML       |         16 |          2 |          1 |         19 |
+| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\App.vue                               | Vue        |         47 |          0 |         14 |         61 |
+| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\assets\global.css                     | CSS        |         61 |          4 |         17 |         82 |
 | c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\components\header.vue                 | Vue        |         16 |          0 |          5 |         21 |
-| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\components\input\column.vue           | Vue        |         45 |          0 |         21 |         66 |
-| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\components\input\index.vue            | Vue        |         78 |          0 |         52 |        130 |
-| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\components\input\row.vue              | Vue        |         22 |          0 |         11 |         33 |
-| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\components\input\table-calibrator.vue | Vue        |         86 |          2 |         42 |        130 |
-| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\components\input\table-options.vue    | Vue        |        129 |          3 |         56 |        188 |
-| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\components\output\index.vue           | Vue        |         64 |         10 |         31 |        105 |
-| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\components\output\line.vue            | Vue        |         63 |          7 |         39 |        109 |
-| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\main.js                               | JavaScript |         10 |          2 |         10 |         22 |
+| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\components\input\cell.vue             | Vue        |         81 |          1 |         37 |        119 |
+| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\components\input\index.vue            | Vue        |         72 |          0 |         46 |        118 |
+| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\components\input\row.vue              | Vue        |         22 |          0 |         12 |         34 |
+| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\components\input\table-calibrator.vue | Vue        |        103 |          2 |         45 |        150 |
+| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\components\input\table-options.vue    | Vue        |        275 |          0 |         84 |        359 |
+| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\components\input\table.vue            | Vue        |        101 |          1 |         39 |        141 |
+| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\components\output\button-copied.vue   | Vue        |         71 |          1 |         25 |         97 |
+| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\components\output\html-table.vue      | Vue        |         28 |          0 |         16 |         44 |
+| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\components\output\index.vue           | Vue        |        106 |          2 |         44 |        152 |
+| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\components\output\line.vue            | Vue        |        142 |         87 |         79 |        308 |
+| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\main.js                               | JavaScript |         11 |          5 |         10 |         26 |
 | c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\units\absx.js                         | JavaScript |          6 |          0 |          6 |         12 |
-| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\units\fxnl.js                         | JavaScript |          7 |          0 |          5 |         12 |
-| Total                                                                                                                                         |            |     12,559 |         26 |        301 |     12,886 |
+| c:\Users\Utilizador\Documents\VikSoft\markdown-ascii-table-generator\markdown-ascii-table-generator\src\units\fxnl.js                         | JavaScript |         12 |          2 |         12 |         26 |
+| Total                                                                                                                                         |            |     13,124 |        107 |        500 |     13,731 |
 +-----------------------------------------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+

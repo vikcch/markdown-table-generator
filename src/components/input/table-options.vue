@@ -7,8 +7,8 @@
 			:class="stateNonHTMLStyleParent"
 		>
 
-			<label>
-				<p>ALign Header</p>
+			<label class="train spaced-h">
+				<p>Align Header:</p>
 				<select
 					:class="stateNonHTMLStyle"
 					:disabled="isHTMLStyle"
@@ -23,7 +23,7 @@
 
 			<div>
 				<label>
-					<p>ALign body rows</p>
+					<p>Align body rows</p>
 					<select
 						:class="['rm-xs',stateNonHTMLStyle]"
 						:disabled="isHTMLStyle"
@@ -78,9 +78,9 @@
 
 			</label>
 
-			<label>
+			<label class="train spaced-h">
 
-				<p>Columns minimum width</p>
+				<p>Minimum column width:</p>
 				<input
 					type="number"
 					ref="min-width"
@@ -88,6 +88,38 @@
 					value="6"
 					:disabled="isHTMLStyle"
 					v-model="minimumWidth"
+				>
+
+			</label>
+
+			<label class="train spaced-h">
+				<p>Comment Sytle:</p>
+				<select
+					:class="['large', stateNonHTMLStyle]"
+					:disabled="isHTMLStyle"
+					v-model="commentStyle.style"
+				>
+					<option value="custom">Custom</option>
+					<option value="doubleslant">// JavaScript</option>
+					<option value="slantsplat">/* ... */ CSS</option>
+					<option value="xml">&lt;!-- --&gt; XML</option>
+				</select>
+
+				<p class="lm-xl">Before:</p>
+				<input
+					class="small"
+					type="text"
+					:disabled="isHTMLStyle"
+					v-model="commentStyle.before"
+
+				>
+
+				<p class="lm-xl">After:</p>
+				<input
+					class="small"
+					type="text"
+					:disabled="isHTMLStyle"
+					v-model="commentStyle.after"
 				>
 
 			</label>
@@ -228,6 +260,11 @@ export default {
 			spreadsheet: false,
 			sameWidth: false,
 			minimumWidth: 6,
+			commentStyle: {
+				style:'custom',
+				before:'',
+				after:''
+			},
 			tableStyle: {
 				style: 'mysql',
 				border: 'double'
@@ -312,7 +349,8 @@ export default {
 
 <style scoped>
 code.demo {
-	font-size: 10pt;
+	font-family: "Lucida Console", Monaco, monospace;
+	font-size: 11px;
 }
 
 .badge {
@@ -333,6 +371,13 @@ code.demo {
 .spaced-v > * + * {
 	margin-top: 8px;
 }
+.spaced-h > * + * {
+	margin-left: 8px;
+}
+
+.lm-xl {
+	margin-left: 32px;
+}
 
 .dark {
 	background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1));
@@ -340,5 +385,13 @@ code.demo {
 
 .table-style--selected {
 	background-image: linear-gradient(rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05));
+}
+
+.large {
+	width: 128px;
+}
+
+.small {
+	width: 48px;
 }
 </style>

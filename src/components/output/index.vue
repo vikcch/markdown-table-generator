@@ -1,10 +1,11 @@
 <template>
 
-	<div>
+	<div class="badge">
 
-		<p>Output:</p>
-
-		<app-button-copied ref="button-copied" />
+		<div class="divorced">
+			<h2>Output:</h2>
+			<app-button-copied ref="button-copied" />
+		</div>
 
 		<div
 			ref="result"
@@ -13,7 +14,6 @@
 
 			<div v-if="isHTML">
 				<pre class="code"><app-html-table :intel="htmlPartsMaker"/></pre>
-
 			</div>
 
 			<div v-else>
@@ -66,7 +66,7 @@ export default {
 
 	updated() {
 
-		this.$refs['button-copied'].copied = false;		
+		this.$refs['button-copied'].copied = false;
 	},
 
 	computed: {
@@ -120,11 +120,12 @@ export default {
 <style scoped>
 /* OPTIMIZE:: font size mais pequeno, desmarcar checkbox no inspector styles e ver tamanho */
 pre.code {
+	font-family: "Lucida Console", Monaco, monospace;
+	font-size: 14px;
 	white-space: pre-wrap;
 	position: relative;
-	border: 1px black solid;
+	border: 1px #b4b4b4 solid;
 	padding: 4px 8px;
-	font-size: 14px;
 	display: flex;
 	justify-content: flex-start;
 }
@@ -138,5 +139,14 @@ pre.code code {
 pre.code code::before {
 	content: counter(listing) ". ";
 	background-color: lightgray;
+}
+
+.badge {
+	padding: 8px;
+	background-color: #fafafa;
+	border-radius: 3px;
+	border: 1px solid #b4b4b4;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2),
+		0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
 }
 </style>
