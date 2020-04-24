@@ -7,6 +7,18 @@ import './assets/global.css';
 
 window.EventVue = new Vue;
 
+import Analytics from 'analytics'
+import googleAnalytics from '@analytics/google-analytics'
+
+Analytics({
+	app: 'Markdown Table Generator',
+	plugins: [
+		googleAnalytics({
+			trackingId: 'UA-146771103-5'
+		})
+	]
+});
+
 new Vue({
 	render: h => h(App),
 }).$mount('#app');
