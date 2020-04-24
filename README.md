@@ -2,6 +2,8 @@
 
 Markdown Table Generator offers an intuitive and easy to use interface for creating ASCII and html data tables.
 
+See it on action: [Markdown Table Generator](https://vikcch.github.io/markdown-table-generator/)
+
 ## Input data on a HTML table style
 
 ![IMG](./src/assets/html-table.png)
