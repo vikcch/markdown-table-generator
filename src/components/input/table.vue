@@ -111,15 +111,6 @@ export default {
 </script>
 
 <style scoped>
-.badge {
-	padding: 8px;
-	background-color: #fafafa;
-	border-radius: 3px;
-	border: 1px solid #b4b4b4;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2),
-		0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
-}
-
 kbd {
 	background-color: #eee;
 	border-radius: 3px;

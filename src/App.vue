@@ -3,29 +3,29 @@
 		id="app"
 		class="page-container"
 	>
-		<app-header
-			class="bm-l"
-			msg="MARKDOWN ASCII TABLE GENERATOR"
-		/>
+		<app-header />
 
 		<app-input ref="input" />
 
 		<app-output ref="output" />
 
+		<app-footer />
 	</div>
 </template>
 
 <script>
-import headerVue from './components/header.vue';
-import inputVue from './components/input';
-import outputVue from './components/output';
+import headerVue from './components/header';
+import inputVue from './components/input/input';
+import outputVue from './components/output/output';
+import footerVue from './components/footer';
 
 export default {
 	name: 'App',
 	components: {
 		'app-header': headerVue,
 		'app-input': inputVue,
-		'app-output': outputVue
+		'app-output': outputVue,
+		'app-footer': footerVue
 	},
 
 	mounted() {

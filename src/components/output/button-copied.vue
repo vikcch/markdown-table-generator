@@ -27,7 +27,7 @@ export default {
 		}
 	},
 
-	methods: {
+	methods: {		
 
 		copyToClipboard_OnClick() {
 
@@ -35,8 +35,7 @@ export default {
 
 			navigator.clipboard.writeText(text).then(() => {
 
-				this.copied = true;
-				console.log(text);
+				this.copied = true;				
 
 			}, function (err) {
 

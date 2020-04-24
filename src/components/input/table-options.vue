@@ -8,7 +8,7 @@
 		>
 
 			<label class="train spaced-h">
-				<p>Align Header:</p>
+				<p>Header Alignment:</p>
 				<select
 					:class="stateNonHTMLStyle"
 					:disabled="isHTMLStyle"
@@ -23,7 +23,7 @@
 
 			<div>
 				<label>
-					<p>Align body rows</p>
+					<p>Body Alignment:</p>
 					<select
 						:class="['rm-xs',stateNonHTMLStyle]"
 						:disabled="isHTMLStyle"
@@ -109,16 +109,15 @@
 				<input
 					class="small"
 					type="text"
-					:disabled="isHTMLStyle"
+					:disabled="isHTMLStyle || isNotCustomStyle"
 					v-model="commentStyle.before"
-
 				>
 
 				<p class="lm-xl">After:</p>
 				<input
 					class="small"
 					type="text"
-					:disabled="isHTMLStyle"
+					:disabled="isHTMLStyle || isNotCustomStyle"
 					v-model="commentStyle.after"
 				>
 
@@ -156,6 +155,30 @@
 
 				</label>
 
+				<label :class="['inner-badge pointer rm-xl', styleStateMarkdown]">
+
+					<input
+						type="radio"
+						ref="markdown"
+						name="style"
+						value="markdown"
+						v-model="tableStyle.style"
+					>
+					<span>Markdown</span>
+
+					<div>
+						<pre class="ladder">
+                            <code class="demo">                   </code>
+                            <code class="demo">| Header | Header |</code>
+                            <code class="demo">|--------|--------|</code>
+                            <code class="demo">|   data |   data |</code>
+                            <code class="demo">|   data |   data |</code>                            
+                            <code class="demo">                   </code>                            
+                            </pre>
+					</div>
+
+				</label>
+
 				<label :class="['inner-badge pointer rm-xl', styleStateASCII]">
 
 					<input
@@ -165,7 +188,7 @@
 						value="ascii"
 						v-model="tableStyle.style"
 					>
-					<span>Ascii</span>
+					<span>Unicode</span>
 
 					<div class="train">
 
@@ -229,8 +252,7 @@
                             <code class="demo">    &lt;/thead&gt;</code>
                             <code class="demo">    &lt;tbody&gt;&lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;</code>
                             <code class="demo">    &lt;/tbody&gt;</code>
-                            <code class="demo">&lt;/table&gt;</code>
-                            
+                            <code class="demo">&lt;/table&gt;</code>                            
                             </pre>
 					</div>
 
@@ -261,9 +283,9 @@ export default {
 			sameWidth: false,
 			minimumWidth: 6,
 			commentStyle: {
-				style:'custom',
-				before:'',
-				after:''
+				style: 'custom',
+				before: '',
+				after: ''
 			},
 			tableStyle: {
 				style: 'mysql',
@@ -283,11 +305,6 @@ export default {
 			parcel.align = align;
 
 			window.EventVue.$emit('updateAlign', parcel);
-		},
-
-		styleStateTableStyle(event) {
-
-			console.log(event);
 		}
 	},
 
@@ -306,6 +323,11 @@ export default {
 		styleStateMySQL() {
 
 			return this.tableStyle.style === 'mysql' ? 'table-style--selected' : '';
+		},
+
+		styleStateMarkdown() {
+
+			return this.tableStyle.style === 'styleStateMarkdown' ? 'table-style--selected' : '';
 		},
 
 		styleStateASCII() {
@@ -331,13 +353,18 @@ export default {
 		isHTMLStyle() {
 
 			return this.tableStyle.style === 'html';
+		},
+
+		isNotCustomStyle() {
+
+			return this.commentStyle.style !== 'custom';
 		}
 
 	},
 
 	watch: {
 
-		'tableStyle.style'(value) {
+		'tableStyle.style'() {
 
 			const outputVue = head(this.$root.$children).$refs['output'];
 
@@ -351,15 +378,6 @@ export default {
 code.demo {
 	font-family: "Lucida Console", Monaco, monospace;
 	font-size: 11px;
-}
-
-.badge {
-	padding: 8px;
-	background-color: #fafafa;
-	border-radius: 3px;
-	border: 1px solid #b4b4b4;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2),
-		0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
 }
 
 .inner-badge {

@@ -1,6 +1,6 @@
 <template>
 
-	<div class="badge">
+	<div class="badge bm-l">
 
 		<div class="divorced">
 			<h2>Output:</h2>
@@ -13,11 +13,11 @@
 		>
 
 			<div v-if="isHTML">
-				<pre class="code"><app-html-table :intel="htmlPartsMaker"/></pre>
+				<pre class="code pre-wrap"><app-html-table :intel="htmlPartsMaker"/></pre>
 			</div>
 
 			<div v-else>
-				<pre class="code"><div><app-line
+				<pre class="code scroll-auto"><div class="padded-r"><app-line
 					v-for="(row,index) in makedRows"
 					:key="index"
 					:intel="{value:row, index:index}"
@@ -34,8 +34,9 @@
 import htmlTableVue from './html-table';
 import lineVue from './line.vue';
 import { head } from '../../units/absx';
-import { addTextToTag } from '../../units/fxnl';
 import buttonCopiedVue from './button-copied.vue';
+
+// class="scroll-auto"
 
 export default {
 
@@ -80,7 +81,6 @@ export default {
 			return highlightHeader;
 		},
 
-
 		// specialRow: Para ser 'top', 'bottom' ou 'entre header e body'
 		makedRows() {
 
@@ -97,8 +97,6 @@ export default {
 
 			result.push(...inputVue.tableBody, specialRow);
 
-			console.log('maked rows');
-
 			return result;
 		},
 
@@ -108,8 +106,6 @@ export default {
 
 			const { tableHead, tableBody } = inputVue;
 
-			console.log('htmlPartsMaker');
-
 			return { tableHead, tableBody };
 		}
 	}
@@ -118,11 +114,9 @@ export default {
 </script>
 
 <style scoped>
-/* OPTIMIZE:: font size mais pequeno, desmarcar checkbox no inspector styles e ver tamanho */
 pre.code {
 	font-family: "Lucida Console", Monaco, monospace;
 	font-size: 14px;
-	white-space: pre-wrap;
 	position: relative;
 	border: 1px #b4b4b4 solid;
 	padding: 4px 8px;
@@ -137,16 +131,21 @@ pre.code code {
 	text-align: right;
 }
 pre.code code::before {
-	content: counter(listing) ". ";
-	background-color: lightgray;
+	content: counter(listing) "  ";
+	background-color: rgb(223, 223, 187);
+	margin-right: 4px;
 }
 
-.badge {
-	padding: 8px;
-	background-color: #fafafa;
-	border-radius: 3px;
-	border: 1px solid #b4b4b4;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2),
-		0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+.pre-wrap {
+	white-space: pre-wrap;
+}
+
+.scroll-auto {
+	overflow-x: auto;
+}
+
+.padded-r {
+	padding-right: 4px;
+	background-color: beige;
 }
 </style>

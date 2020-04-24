@@ -9,8 +9,7 @@
   },
   "dependencies": {
     "core-js": "^3.6.4",
-    "vue": "^2.6.11",
-    "vue-sweetalert2": "^3.0.3"
+    "vue": "^2.6.11"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.3.0",
@@ -33,10 +32,7 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {    
-      "no-unused-vars": "off",
-      "no-debugger": "off"
-    }
+    "rules": {}
   },
   "browserslist": [
     "> 1%",

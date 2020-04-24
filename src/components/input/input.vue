@@ -9,7 +9,7 @@
 			<app-table-calibrator :intel="{name: 'Column', key:'column', value: columnsCount}" />
 
 		</div>
-		
+
 		<app-table
 			class="bm-l"
 			:tableHead="tableHead"
@@ -79,8 +79,6 @@ export default {
 
 			return Math.max(maxHeader, maxBody);
 		},
-
-
 
 	},
 

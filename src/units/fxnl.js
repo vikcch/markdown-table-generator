@@ -1,6 +1,4 @@
-export const makePrefixer = prefix => string => `${prefix}${string}`;
-
-export const makeSufixer = sufixe => string => `${string}${sufixe}`;
+export const pipe = (...fns) => arg => fns.reduce((acc, cur) => cur(acc), arg);
 
 // Inclui o tamanho da string no paddig.
 // count = 10, string.length = 4, preenche 6 (3+3)
@@ -15,11 +13,9 @@ export const padEdges = edges => (string, count) => {
     return `${edges.repeat(countSide)}${text}${edges.repeat(countSide)}`;
 };
 
-export const removeCharAt = index => string => string.slice(0, index) + string.slice(0, index + 1);
-
 export const validator = (...tests) => obj => tests.every(fn => fn(obj));
 
 export const addTextToTag = tag => text => `<${tag}>${text}</${tag}>`;
 
-export default { makePrefixer, makeSufixer, removeCharAt, validator, addTextToTag };
+export default { validator, addTextToTag };
 

@@ -1,11 +1,10 @@
 <template>
 
-	<div>{{htmlTable}}</div>
+	<div class="code">{{htmlTable}}</div>
 
 </template>
 
 <script>
-import { head } from '../../units/absx';
 import { addTextToTag } from '../../units/fxnl';
 export default {
 
@@ -40,5 +39,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.code {
+	background-color: beige;
+}
 </style>

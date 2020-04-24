@@ -1,12 +1,12 @@
 <template>
 
-	<code> {{row}} </code>
+	<code v-show="isNotEmpty">{{row}}</code>
 
 </template>
 
 <script>
-import { head, removeLastChar, padSpacedEdges } from '../../units/absx';
-import { padEdges } from '../../units/fxnl';
+import { head, removeLastChar } from '../../units/absx';
+import { padEdges, pipe } from '../../units/fxnl';
 
 export default {
 
@@ -15,7 +15,24 @@ export default {
 		intel: Object,
 	},
 
+	data() {
+
+		return {
+
+			isNotEmpty: true
+		};
+	},
+
 	methods: {
+
+		/**
+		 * Rows vazias são oculatadas, topo e fundo em style 'markdown'
+		 * @param {String} 		row
+		 */
+		setVisibility(row) {
+
+			this.isNotEmpty = ' '.repeat(row.length) !== row;
+		},
 
 		/**		 
 		 * É o comprimento da string resultante.
@@ -136,8 +153,6 @@ export default {
 
 				const inputVue = head(this.$root.$children).$refs['input'];
 
-				const isSpecialRow = fillers.pad !== ' ';
-
 				const { rowsCount } = inputVue;
 
 				const highlight = this.options.highlightHeader;
@@ -150,7 +165,7 @@ export default {
 
 				const padCount = Math.max(rowsCountLen, 2);
 
-				const cellText = isSpecialRow || highlight && isHeaderRow
+				const cellText = this.isSpecialRow || highlight && isHeaderRow
 					? ''.padStart(padCount, fillers.pad)
 					: lineNumber.toString().padStart(padCount, ' ');
 
@@ -162,6 +177,11 @@ export default {
 			}
 		},
 
+		/**
+		 * Adiciona "line comment" em row não vazia
+		 * @param {String} 		row						 
+		 * @return {String}		
+		 */
 		addComment(row) {
 
 			const { style, before, after } = this.options.commentStyle;
@@ -169,14 +189,15 @@ export default {
 			const work = {
 
 				custom: `${before}${row}${after}`,
-				doubleslant: `// ${row} `,
+				doubleslant: `// ${row}`,
 				slantsplat: `/* ${row} */`,
 				xml: `<!-- ${row} -->`,
 			};
 
-			return work[style];
-		}
+			const isEmpty = ' '.repeat(row.length) === row;
 
+			return isEmpty ? row : work[style];
+		},
 	},
 
 	computed: {
@@ -209,6 +230,9 @@ export default {
 		specialRowFiller() {
 
 			const tableStyle = {
+				markdown: {
+					def: { top: '    ', middle: '|-||', bottom: '    ' }
+				},
 				mysql: {
 					def: { top: '+-++', middle: '+-++', bottom: '+-++' }
 				},
@@ -250,6 +274,9 @@ export default {
 		dataRowFiller() {
 
 			const tableStyle = {
+				markdown: {
+					def: '| ||'
+				},
 				mysql: {
 					def: '| ||'
 				},
@@ -293,6 +320,7 @@ export default {
 
 		/**
 		 * Interpolação
+		 * Pode adicionar spreadsheet e/ou comment
 		 * @return {String}		
 		 */
 		row() {
@@ -303,27 +331,21 @@ export default {
 
 			const row = this.getRow(filler);
 
-			// const spreadsheet = this.options.spreadsheet;
+			const sprFilledOrSkip = this.options.spreadsheet
+				? this.addSpreadsheet(filler)
+				: r => r;
 
-			// return spreadsheet ? this.addSpreadsheet(row, filler) : row;
-			// return spreadsheet ? this.addSpreadsheet(filler)(row) : row;
+			const result = pipe(sprFilledOrSkip, this.addComment)(row);
 
-			// TODO:: pra fxnl ou absx
-			const pipe = (...fns) => arg => fns.reduce((acc, cur) => cur(acc), arg);
+			this.setVisibility(result);
 
-			const { spreadsheet } = this.options;
-
-			const sprFilledOrSkip = spreadsheet ? this.addSpreadsheet(filler) : r => r;
-
-			return pipe(sprFilledOrSkip, this.addComment)(row);
+			return result;
 		}
 	},
 
 	updated() {
 
 		this.$parent.$refs['button-copied'].copied = false;
-
-		console.log('em line');
 	},
 }
 </script>
